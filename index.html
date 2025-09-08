@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>CAD Tag Generator</title>
+  <title>CAD Tag Generator — Wit & Sirene</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,25 +12,22 @@
       <h1>Instellingen</h1>
       <div class="row">
         <div>
-          <label for="text">Tekst</label>
+          <label for="text">Tekst (automatisch CAPS & gecentreerd)</label>
           <input id="text" value="LAFD 021">
         </div>
         <div>
-          <label><input id="uppercase" type="checkbox" checked> Uppercase</label>
-        </div>
-      </div>
-
-      <div class="row">
-        <div>
           <label for="font">Lettertype</label>
           <select id="font">
+            <option selected>Inter, system-ui, Arial</option>
             <option>Segoe UI, system-ui, Arial</option>
             <option>Roboto, system-ui, Arial</option>
-            <option selected>Inter, system-ui, Arial</option>
             <option>Oswald, Impact, Arial Narrow, sans-serif</option>
             <option>Roboto Mono, Consolas, monospace</option>
           </select>
         </div>
+      </div>
+
+      <div class="row">
         <div>
           <label for="weight">Gewicht</label>
           <select id="weight">
@@ -40,50 +37,36 @@
             <option>800</option>
           </select>
         </div>
-      </div>
-
-      <div class="row-3">
-        <div><label for="size">Tekstgrootte</label><input id="size" type="number" value="48" min="8" max="200"></div>
-        <div><label for="padX">Padding X</label><input id="padX" type="number" value="28" min="0" max="200"></div>
-        <div><label for="padY">Padding Y</label><input id="padY" type="number" value="16" min="0" max="200"></div>
-      </div>
-
-      <h2>Normaal</h2>
-      <div class="row">
-        <div><label for="textColor">Tekstkleur</label><input id="textColor" type="color" value="#ffffff"></div>
-        <div><label for="strokeColor">Randkleur</label><input id="strokeColor" type="color" value="#1E90FF"></div>
-      </div>
-      <div class="row-3">
-        <div><label for="stroke">Rand (px)</label><input id="stroke" type="number" value="3" min="0" max="20"></div>
-        <div><label for="radius">Hoekradius</label><input id="radius" type="number" value="12" min="0" max="40"></div>
-        <div><label for="bgAlpha">BG α</label><input id="bgAlpha" type="number" value="0.75" step="0.05" min="0" max="1"></div>
-      </div>
-      <div class="row">
-        <div><label for="bgColor">Achtergrond</label><input id="bgColor" type="color" value="#0B1736"></div>
-        <div>
-          <label for="transparentBg">Transparant</label>
-          <select id="transparentBg"><option value="0" selected>Nee</option><option value="1">Ja</option></select>
+        <div class="row-2">
+          <div><label for="size">Tekstgrootte</label><input id="size" type="number" value="48" min="8" max="200"></div>
+          <div><label for="radius">Hoekradius</label><input id="radius" type="number" value="12" min="0" max="40"></div>
         </div>
       </div>
 
-      <h2>Spoed</h2>
-      <div class="row">
-        <div><label for="gradStart">Startkleur</label><input id="gradStart" type="color" value="#ff2d2d"></div>
-        <div><label for="gradEnd">Eindkleur</label><input id="gradEnd" type="color" value="#ffd500"></div>
+      <div class="row-3">
+        <div><label for="padX">Padding X</label><input id="padX" type="number" value="28" min="0" max="200"></div>
+        <div><label for="padY">Padding Y</label><input id="padY" type="number" value="16" min="0" max="200"></div>
+        <div><label for="stroke">Rand (px)</label><input id="stroke" type="number" value="3" min="0" max="20"></div>
       </div>
+
       <div class="row">
-        <div><label for="gradAngle">Hoek (°)</label><input id="gradAngle" type="number" value="0" min="0" max="360"></div>
+        <div><label for="textColor">Tekstkleur</label><input id="textColor" type="color" value="#000000"></div>
+        <div><label for="strokeColor">Randkleur</label><input id="strokeColor" type="color" value="#1E90FF"></div>
+      </div>
+
+      <h2>Sirene-instellingen (alleen voor spoed)</h2>
+      <div class="row">
+        <div><label for="blue">Blauw</label><input id="blue" type="color" value="#1E90FF"></div>
+        <div><label for="angle">Hoek (° – 0=horizontaal)</label><input id="angle" type="number" value="0" min="0" max="360"></div>
       </div>
 
       <div class="btns">
-        <button id="dlNormaal">Download normaal</button>
-        <button id="dlSpoed">Download spoed</button>
+        <button id="dlNormaal">Download normaal (wit)</button>
+        <button id="dlSpoed">Download spoed (wit→blauw)</button>
         <button id="dlBeide">Download beide</button>
       </div>
 
-      <div class="status" id="status">
-        Status: init...
-      </div>
+      <div class="status" id="status">Status: init...</div>
     </div>
 
     <div class="card">

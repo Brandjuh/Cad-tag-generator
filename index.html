@@ -1,35 +1,35 @@
 <!doctype html>
-<html lang="nl">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>CAD Tag Generator — Spoed Patronen (SAFE)</title>
+  <title>CAD Tag Generator — Pro (Page-Safe)</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <h1>Instellingen</h1>
-      <div class="row">
+      <h1>Settings</h1>
+
+      <!-- This page-safe build includes all controls. If you use a custom HTML, it's fine:
+           app.js will gracefully fallback when a control is missing. -->
+      <div class="row-3">
         <div>
-          <label for="text">Tekst (altijd CAPS & gecentreerd)</label>
-          <input id="text" value="LAFD 021">
+          <label for="text">Text (always CAPS & centered)</label>
+          <input id="text" value="UNIT 021">
         </div>
         <div>
-          <label for="font">Lettertype</label>
+          <label for="font">Font</label>
           <select id="font">
+            <option selected>Inter, system-ui, Arial</option>
             <option>Segoe UI, system-ui, Arial</option>
             <option>Roboto, system-ui, Arial</option>
-            <option selected>Inter, system-ui, Arial</option>
             <option>Oswald, Impact, Arial Narrow, sans-serif</option>
             <option>Roboto Mono, Consolas, monospace</option>
           </select>
         </div>
-      </div>
-
-      <div class="row">
         <div>
-          <label for="weight">Gewicht</label>
+          <label for="weight">Weight</label>
           <select id="weight">
             <option>500</option>
             <option selected>600</option>
@@ -37,67 +37,100 @@
             <option>800</option>
           </select>
         </div>
-        <div class="row-2">
-          <div><label for="size">Tekstgrootte</label><input id="size" type="number" value="48" min="8" max="200"></div>
-          <div><label for="radius">Hoekradius</label><input id="radius" type="number" value="12" min="0" max="40"></div>
-        </div>
+      </div>
+
+      <div class="row-4">
+        <div><label for="width">Width (px)</label><input id="width" type="number" value="50" min="16" max="2000"></div>
+        <div><label for="height">Height (px)</label><input id="height" type="number" value="13" min="8" max="2000"></div>
+        <div><label for="padX">Padding X</label><input id="padX" type="number" value="4" min="0" max="200"></div>
+        <div><label for="padY">Padding Y</label><input id="padY" type="number" value="1" min="0" max="200"></div>
+      </div>
+
+      <div class="row-4">
+        <div><label for="stroke">Border (px)</label><input id="stroke" type="number" value="1" min="0" max="8"></div>
+        <div><label for="radius">Corner radius</label><input id="radius" type="number" value="2" min="0" max="20"></div>
+        <div><label for="size">Base text size</label><input id="size" type="number" value="9" min="6" max="200"></div>
+        <div><label><input id="autofit" type="checkbox" checked> Auto-fit text</label></div>
       </div>
 
       <div class="row-3">
-        <div><label for="padX">Padding X</label><input id="padX" type="number" value="28" min="0" max="200"></div>
-        <div><label for="padY">Padding Y</label><input id="padY" type="number" value="16" min="0" max="200"></div>
-        <div><label for="stroke">Rand (px)</label><input id="stroke" type="number" value="3" min="0" max="20"></div>
+        <div><label for="textColor">Text color</label><input id="textColor" type="color" value="#000000"></div>
+        <div><label for="colorA">Base color A</label><input id="colorA" type="color" value="#ffffff"></div>
+        <div><label for="colorB">Accent color B</label><input id="colorB" type="color" value="#1E90FF"></div>
       </div>
 
-      <div class="row">
-        <div><label for="textColor">Tekstkleur</label><input id="textColor" type="color" value="#000000"></div>
-        <div><label for="strokeColor">Randkleur</label><input id="strokeColor" type="color" value="#1E90FF"></div>
-      </div>
-
-      <h2>Spoed-animatie</h2>
-      <div class="row">
+      <h2>Emergency (animated background)</h2>
+      <div class="row-3">
         <div>
-          <label for="pattern">Patroon</label>
+          <label for="pattern">Pattern</label>
           <select id="pattern">
-            <option value="sweep" selected>Gradient Sweep</option>
-            <option value="blink">Knipperen (wit ↔ blauw)</option>
-            <option value="pulse">Pulseren (vloeiend mix)</option>
-            <option value="alt-halves">Alternating helften</option>
-            <option value="bars">Bewegende strepen</option>
-            <option value="lr-pulse">Links/Rechts onafhankelijk</option>
+            <optgroup label="General">
+              <option value="sweep" selected>Gradient Sweep</option>
+              <option value="blink">Blink (A ↔ B)</option>
+              <option value="pulse">Pulse (smooth A→B)</option>
+              <option value="alt-halves">Alternating halves</option>
+              <option value="lr-pulse">Left/Right pulse (out of phase)</option>
+              <option value="bars">Moving stripes</option>
+              <option value="beacon">Single beacon sweep</option>
+              <option value="dual-beacon">Dual beacons (cross)</option>
+              <option value="checker">Checker flash</option>
+              <option value="diagonal-sweep">Diagonal sweep</option>
+            </optgroup>
+            <optgroup label="EU oriented">
+              <option value="eu-triple">EU Triple Blue pulses</option>
+              <option value="eu-rolling">EU Rolling blue band</option>
+            </optgroup>
+            <optgroup label="US oriented">
+              <option value="us-alt-rb">US Alt Red/Blue halves</option>
+              <option value="us-split-strobe">US Split strobe R/B</option>
+            </optgroup>
           </select>
         </div>
-        <div>
-          <label for="blue">Blauwtint</label>
-          <input id="blue" type="color" value="#1E90FF">
-        </div>
+        <div><label for="angle">Angle (°)</label><input id="angle" type="number" value="0" min="0" max="360"></div>
+        <div><label for="speed">Speed (x1..x5)</label><input id="speed" type="number" value="1" step="0.1" min="0.2" max="5"></div>
       </div>
       <div class="row-3">
-        <div><label for="angle">Hoek (° – sweep/strepen)</label><input id="angle" type="number" value="0" min="0" max="360"></div>
-        <div><label for="bars">Strepen (aantal)</label><input id="bars" type="number" value="5" min="1" max="20"></div>
-        <div><label for="soft">Zachtheid (0..0.5)</label><input id="soft" type="number" value="0.0" step="0.05" min="0" max="0.5"></div>
+        <div><label for="bars">Stripes count</label><input id="bars" type="number" value="5" min="1" max="40"></div>
+        <div><label for="soft">Softness (0..0.5)</label><input id="soft" type="number" value="0.0" step="0.05" min="0" max="0.5"></div>
+        <div><label for="intensity">Intensity (0..1)</label><input id="intensity" type="number" value="0.8" step="0.05" min="0" max="1"></div>
       </div>
-      <div class="row">
-        <div><label for="duration">Duur (s)</label><input id="duration" type="number" value="2" min="1" max="10"></div>
+
+      <div class="row-4">
+        <div><label for="duration">Duration (s)</label><input id="duration" type="number" value="2" min="1" max="20"></div>
         <div><label for="fps">FPS</label><input id="fps" type="number" value="24" min="8" max="60"></div>
+        <div><label for="previewZoom">Preview zoom</label><input id="previewZoom" type="number" value="6" min="1" max="20"></div>
+        <div><label for="exportScale">Export scale</label>
+          <select id="exportScale">
+            <option value="1" selected>1×</option>
+            <option value="2">2×</option>
+            <option value="3">3×</option>
+            <option value="4">4×</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row-3">
+        <div><button id="presetEU" class="subtle">Preset: EU Blue (triple)</button></div>
+        <div><button id="presetUS" class="subtle">Preset: US Red/Blue</button></div>
+        <div><button id="presetClean" class="subtle">Preset: Clean (white/blue)</button></div>
       </div>
 
       <div class="btns">
-        <button id="dlNormaal">Download normaal (PNG)</button>
-        <button id="dlSpoedPng">Download spoed (PNG, enkel frame)</button>
-        <button id="dlSpoedWebm">Download spoed (WEBM animatie)</button>
-        <button id="dlBeide">Download beide PNG</button>
+        <button id="dlNormal">Download normal (PNG)</button>
+        <button id="dlUrgentPng">Download urgent (PNG, single frame)</button>
+        <button id="dlUrgentWebm">Download urgent (WEBM)</button>
+        <button id="dlBoth">Download both PNG</button>
       </div>
 
       <div class="status" id="status">Status: init...</div>
     </div>
 
     <div class="card">
-      <h1>Voorbeeld</h1>
-      <p class="hint">Spoed-preview is live geanimeerd. WEBM-export gebruikt exact hetzelfde patroon.</p>
+      <h1>Preview</h1>
+      <p class="hint">Normal is static. Urgent is live animated. WEBM export matches the animation exactly.</p>
       <div class="preview">
-        <div class="slot"><div class="label">Normaal</div><canvas id="cn" width="600" height="240"></canvas></div>
-        <div class="slot"><div class="label">Spoed (animatie)</div><canvas id="cu" width="600" height="240"></canvas></div>
+        <div class="slot"><div class="label">Normal</div><canvas id="cn" width="50" height="13"></canvas></div>
+        <div class="slot"><div class="label">Urgent</div><canvas id="cu" width="50" height="13"></canvas></div>
       </div>
     </div>
   </div>

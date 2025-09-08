@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CAD Tag Generator — Safe Mode</title>
+  <style>
+    :root { --bg:#0b0f17; --panel:#121826; --muted:#8aa0b4; --text:#e7eef7; --accent:#5cc8ff; }
+    *{box-sizing:border-box}
+    body{margin:0;background:#0b0f17;color:var(--text);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Arial}
+    .wrap{display:grid;grid-template-columns:380px 1fr;gap:16px;min-height:100vh;padding:16px}
+    .card{background:#111724;border:1px solid #1d2740;border-radius:14px;padding:16px;box-shadow:0 6px 30px rgba(0,0,0,.25)}
+    h1{font-size:18px;margin:0 0 10px}
+    label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
+    input,select,textarea{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #24314f;background:#0c1324;color:#e7eef7;outline:none}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    button{cursor:pointer;padding:10px 14px;border-radius:12px;border:1px solid #29406f;background:#12244a;color:#e7eef7;font-weight:600}
+    button.primary{border-color:#1c87b4;background:linear-gradient(180deg,#1e6e9b,#175c85)}
+    button.warn{border-color:#b41c1c;background:linear-gradient(180deg,#9b1e1e,#851717)}
+    .preview{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .slot{display:grid;gap:8px;place-items:center}
+    .label{font-size:12px;color:#96a7bb}
+    canvas{max-width:100%;height:auto;background:#0a0f1a;border:1px dashed #2a3a66;border-radius:12px}
+    .status{position:sticky;top:16px;background:#0c1324;border:1px solid #24314f;border-radius:12px;padding:10px;font-family:ui-monospace,Consolas,monospace;font-size:12px;color:#cfe7ff;white-space:pre-wrap}
+    .err{color:#ffd2d2}
+    .ok{color:#aef0c3}
+    noscript{display:block;margin:12px 0;padding:12px;border-radius:10px;background:#3a0e0e;color:#ffdede;border:1px solid #6b1a1a}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Instellingen</h1>
+      <noscript>JavaScript staat uit. Zet JS aan — anders werkt deze pagina niet.</noscript>
+      <div class="row">
+        <div>
+          <label for="text">Tekst</label>
+          <input id="text" value="LAFD 021" />
+        </div>
+        <div>
+          <label for="uppercase">Uppercase</label>
+          <select id="uppercase"><option value="1" selected>Ja</option><option value="0">Nee</option></select>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="font">Lettertype</label>
+          <select id="font">
+            <option>Segoe UI, system-ui, Arial</option>
+            <option>Roboto, system-ui, Arial</option>
+            <option>Inter, system-ui, Arial</option>
+            <option>Oswald, Impact, Arial Narrow, sans-serif</option>
+            <option>Roboto Mono, Consolas, monospace</option>
+          </select>
+        </div>
+        <div>
+          <label for="weight">Gewicht</label>
+          <select id="weight"><option>600</option><option>700</option><option>800</option><option>500</option></select>
+        </div>
+      </div>
+      <div class="row-3">
+        <div><label for="size">Tekstgrootte</label><input id="size" type="number" value="48" min="8" max="200"/></div>
+        <div><label for="padX">Padding X</label><input id="padX" type="number" value="28" min="0" max="200"/></div>
+        <div><label for="padY">Padding Y</label><input id="padY" type="number" value="16" min="0" max="200"/></div>
+      </div>
+
+      <h1>Normaal</h1>
+      <div class="row">
+        <div><label for="textColor">Tekst</label><input id="textColor" type="color" value="#ffffff"/></div>
+        <div><label for="strokeColor">Randkleur</label><input id="strokeColor" type="color" value="#1E90FF"/></div>
+      </div>
+      <div class="row-3">
+        <div><label for="stroke">Rand (px)</label><input id="stroke" type="number" value="3" min="0" max="20"/></div>
+        <div><label for="radius">Hoekradius</label><input id="radius" type="number" value="12" min="0" max="40"/></div>
+        <div><label for="bgAlpha">BG α</label><input id="bgAlpha" type="number" value="0.75" step="0.05" min="0" max="1"/></div>
+      </div>
+      <div class="row">
+        <div><label for="bgColor">Achtergrond</label><input id="bgColor" type="color" value="#0B1736"/></div>
+        <div><label for="transparentBg">Transparant</label><select id="transparentBg"><option value="0" selected>Nee</option><option value="1">Ja</option></select></div>
+      </div>
+
+      <h1>Spoed</h1>
+      <div class="row">
+        <div><label for="gradStart">Startkleur</label><input id="gradStart" type="color" value="#ff2d2d"/></div>
+        <div><label for="gradEnd">Eindkleur</label><input id="gradEnd" type="color" value="#ffd500"/></div>
+      </div>
+      <div class="row">
+        <div><label for="gradAngle">Hoek (°)</label><input id="gradAngle" type="number" value="0" min="0" max="360"/></div>
+      </div>
+
+      <div class="btns">
+        <button class="primary" id="dlNormaal">Download normaal</button>
+        <button class="warn" id="dlSpoed">Download spoed</button>
+        <button id="dlBeide">Download beide</button>
+      </div>
+
+      <div class="status" id="status">Status: init...
+JS geladen: ❓
+Laatst gerenderd: –
+DPR: –
+Normal canvas: –
+Urgent canvas: –
+Text metrics: –
+Error: –
+      </div>
+    </div>
+
+    <div class="card">
+      <h1>Voorbeeld</h1>
+      <div class="preview">
+        <div class="slot"><div class="label">Normaal</div><canvas id="cn" width="600" height="240"></canvas></div>
+        <div class="slot"><div class="label">Spoed</div><canvas id="cu" width="600" height="240"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      // ---------- DEBUG OVERLAY ----------
+      var statusEl = document.getElementById('status');
+      function showStatus(obj){
+        var s = 'Status: OK
+';
+        s += 'JS geladen: ✅
+';
+        s += 'Laatst gerenderd: ' + (new Date()).toLocaleTimeString() + '
+';
+        s += 'DPR: ' + (window.devicePixelRatio||1) + '
+';
+        s += 'Normal canvas: CSS ' + cn.style.width + ' x ' + cn.style.height + ' | Buffer ' + cn.width + ' x ' + cn.height + '
+';
+        s += 'Urgent canvas: CSS '  + cu.style.width + ' x ' + cu.style.height + ' | Buffer ' + cu.width + ' x ' + cu.height + '
+';
+        if(obj && obj.metrics){ s += 'Text metrics: w=' + obj.metrics.w + ', h=' + obj.metrics.h + '
+'; }
+        if(obj && obj.err){ s += 'Error: ' + obj.err + '
+'; }
+        statusEl.textContent = s;
+      }
+      window.addEventListener('error', function(e){ statusEl.textContent += '
+[window.onerror] ' + e.message; });
+      window.addEventListener('unhandledrejection', function(e){ statusEl.textContent += '
+[unhandledrejection] ' + (e.reason && e.reason.message || e.reason); });
+
+      // ---------- ELEMENTS ----------
+      var cn = document.getElementById('cn');
+      var cu = document.getElementById('cu');
+      var ctxN = cn.getContext('2d');
+      var ctxU = cu.getContext('2d');
+
+      var $ = function(id){ return document.getElementById(id); }
+      var inputs = {
+        text: $('text'), uppercase: $('uppercase'), font: $('font'), weight: $('weight'), size: $('size'), padX: $('padX'), padY: $('padY'),
+        textColor: $('textColor'), strokeColor: $('strokeColor'), stroke: $('stroke'), radius: $('radius'), bgAlpha: $('bgAlpha'), bgColor: $('bgColor'), transparentBg: $('transparentBg'),
+        gradStart: $('gradStart'), gradEnd: $('gradEnd'), gradAngle: $('gradAngle')
+      };
+
+      function clamp(n, a, b){ n = parseFloat(n); if(isNaN(n)) n=a; return Math.max(a, Math.min(b, n)); }
+
+      // Afzonderlijk meet-canvas zodat transforms nooit storen
+      var measureCanvas = document.createElement('canvas');
+      var mctx = measureCanvas.getContext('2d');
+      function measureText(text, font){ mctx.font = font; return { w: Math.ceil(mctx.measureText(text).width), h: Math.ceil(parseInt(font)*1.2) }; }
+
+      function setup(canvas, w, h, dpr){ canvas.width = Math.max(1, Math.floor(w*dpr)); canvas.height = Math.max(1, Math.floor(h*dpr)); canvas.style.width = Math.round(w)+'px'; canvas.style.height = Math.round(h)+'px'; }
+      function rr(ctx,x,y,w,h,r){ r=Math.max(0,Math.min(r,Math.min(w,h)/2)); ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+      function grad(ctx,x,y,w,h,ang,c0,c1){ var rad = (ang%360)*Math.PI/180; var cx=x+w/2, cy=y+h/2; var R=Math.sqrt(w*w+h*h)/2; var x0=cx-Math.cos(rad)*R, y0=cy-Math.sin(rad)*R; var x1=cx+Math.cos(rad)*R, y1=cy+Math.sin(rad)*R; var g=ctx.createLinearGradient(x0,y0,x1,y1); g.addColorStop(0,c0); g.addColorStop(1,c1); return g; }
+
+      function params(){
+        var raw = (inputs.text.value||'LAFD 021').trim();
+        var text = (inputs.uppercase.value==='1') ? raw.toUpperCase() : raw;
+        var size = clamp(inputs.size.value,8,200);
+        var padX = clamp(inputs.padX.value,0,200);
+        var padY = clamp(inputs.padY.value,0,200);
+        var stroke = clamp(inputs.stroke.value,0,40);
+        var radius = clamp(inputs.radius.value,0,40);
+        var weight = inputs.weight.value+'';
+        var family = inputs.font.value+'';
+        var font = weight + ' ' + size + 'px ' + family;
+        return {text,size,padX,padY,stroke,radius,weight,family,font};
+      }
+
+      function drawOne(ctx, canvas, urgent){
+        var p = params();
+        var m = measureText(p.text, p.font);
+        var w = m.w + p.padX*2 + p.stroke*2;
+        var h = m.h + p.padY*2 + p.stroke*2;
+        var dpr = Math.max(1, Math.round(window.devicePixelRatio||1));
+        setup(canvas, w, h, dpr);
+
+        ctx.setTransform(1,0,0,1,0,0);
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.scale(dpr,dpr);
+
+        // achtergrond
+        if(inputs.transparentBg.value !== '1'){
+          if(urgent){
+            var a = clamp(inputs.bgAlpha.value,0,1);
+            ctx.globalAlpha = a;
+            ctx.fillStyle = grad(ctx, p.stroke/2, p.stroke/2, w-p.stroke, h-p.stroke, parseFloat(inputs.gradAngle.value)||0, inputs.gradStart.value||'#ff2d2d', inputs.gradEnd.value||'#ffd500');
+            rr(ctx, p.stroke/2, p.stroke/2, w-p.stroke, h-p.stroke, p.radius); ctx.fill(); ctx.globalAlpha=1;
+          } else {
+            var a2 = clamp(inputs.bgAlpha.value,0,1);
+            ctx.globalAlpha = a2; ctx.fillStyle = inputs.bgColor.value || '#0B1736';
+            rr(ctx, p.stroke/2, p.stroke/2, w-p.stroke, h-p.stroke, p.radius); ctx.fill(); ctx.globalAlpha=1;
+          }
+        }
+        // rand
+        if(p.stroke>0){ ctx.strokeStyle = inputs.strokeColor.value||'#1E90FF'; ctx.lineWidth=p.stroke; rr(ctx, p.stroke/2, p.stroke/2, w-p.stroke, h-p.stroke, p.radius); ctx.stroke(); }
+        // tekst
+        ctx.font = p.font; ctx.textBaseline='middle'; ctx.fillStyle = inputs.textColor.value||'#fff';
+        ctx.fillText(p.text, Math.round(w/2 - m.w/2 + (p.stroke/2)), Math.round(h/2));
+
+        showStatus({metrics:m});
+      }
+
+      function draw(){ drawOne(ctxN, cn, false); drawOne(ctxU, cu, true); }
+
+      // Events (simpel en betrouwbaar)
+      var ids = ['text','uppercase','font','weight','size','padX','padY','textColor','strokeColor','stroke','radius','bgAlpha','bgColor','transparentBg','gradStart','gradEnd','gradAngle'];
+      ids.forEach(function(id){ var el = document.getElementById(id); if(el){ el.addEventListener('input', draw); el.addEventListener('change', draw); }});
+
+      // Downloads
+      function save(canvas, base){ var name = (base||'tag').replace(/[^a-z0-9-_]+/gi,'_'); var link = document.createElement('a'); link.href = canvas.toDataURL('image/png'); link.download = name; document.body.appendChild(link); link.click(); document.body.removeChild(link); }
+      document.getElementById('dlNormaal').addEventListener('click', function(){ save(cn, (inputs.text.value||'tag')+'__normaal.png'); });
+      document.getElementById('dlSpoed').addEventListener('click', function(){ save(cu, (inputs.text.value||'tag')+'__spoed.png'); });
+      document.getElementById('dlBeide').addEventListener('click', function(){ save(cn, (inputs.text.value||'tag')+'__normaal.png'); setTimeout(function(){ save(cu, (inputs.text.value||'tag')+'__spoed.png'); }, 200); });
+
+      // Init
+      draw();
+    })();
+  </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>CAD Tag Generator — Wit & Sirene</title>
+  <title>CAD Tag Generator — Spoed Patronen (SAFE)</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,15 +12,15 @@
       <h1>Instellingen</h1>
       <div class="row">
         <div>
-          <label for="text">Tekst (automatisch CAPS & gecentreerd)</label>
+          <label for="text">Tekst (altijd CAPS & gecentreerd)</label>
           <input id="text" value="LAFD 021">
         </div>
         <div>
           <label for="font">Lettertype</label>
           <select id="font">
-            <option selected>Inter, system-ui, Arial</option>
             <option>Segoe UI, system-ui, Arial</option>
             <option>Roboto, system-ui, Arial</option>
+            <option selected>Inter, system-ui, Arial</option>
             <option>Oswald, Impact, Arial Narrow, sans-serif</option>
             <option>Roboto Mono, Consolas, monospace</option>
           </select>
@@ -54,16 +54,39 @@
         <div><label for="strokeColor">Randkleur</label><input id="strokeColor" type="color" value="#1E90FF"></div>
       </div>
 
-      <h2>Sirene-instellingen (alleen voor spoed)</h2>
+      <h2>Spoed-animatie</h2>
       <div class="row">
-        <div><label for="blue">Blauw</label><input id="blue" type="color" value="#1E90FF"></div>
-        <div><label for="angle">Hoek (° – 0=horizontaal)</label><input id="angle" type="number" value="0" min="0" max="360"></div>
+        <div>
+          <label for="pattern">Patroon</label>
+          <select id="pattern">
+            <option value="sweep" selected>Gradient Sweep</option>
+            <option value="blink">Knipperen (wit ↔ blauw)</option>
+            <option value="pulse">Pulseren (vloeiend mix)</option>
+            <option value="alt-halves">Alternating helften</option>
+            <option value="bars">Bewegende strepen</option>
+            <option value="lr-pulse">Links/Rechts onafhankelijk</option>
+          </select>
+        </div>
+        <div>
+          <label for="blue">Blauwtint</label>
+          <input id="blue" type="color" value="#1E90FF">
+        </div>
+      </div>
+      <div class="row-3">
+        <div><label for="angle">Hoek (° – sweep/strepen)</label><input id="angle" type="number" value="0" min="0" max="360"></div>
+        <div><label for="bars">Strepen (aantal)</label><input id="bars" type="number" value="5" min="1" max="20"></div>
+        <div><label for="soft">Zachtheid (0..0.5)</label><input id="soft" type="number" value="0.0" step="0.05" min="0" max="0.5"></div>
+      </div>
+      <div class="row">
+        <div><label for="duration">Duur (s)</label><input id="duration" type="number" value="2" min="1" max="10"></div>
+        <div><label for="fps">FPS</label><input id="fps" type="number" value="24" min="8" max="60"></div>
       </div>
 
       <div class="btns">
-        <button id="dlNormaal">Download normaal (wit)</button>
-        <button id="dlSpoed">Download spoed (wit→blauw)</button>
-        <button id="dlBeide">Download beide</button>
+        <button id="dlNormaal">Download normaal (PNG)</button>
+        <button id="dlSpoedPng">Download spoed (PNG, enkel frame)</button>
+        <button id="dlSpoedWebm">Download spoed (WEBM animatie)</button>
+        <button id="dlBeide">Download beide PNG</button>
       </div>
 
       <div class="status" id="status">Status: init...</div>
@@ -71,13 +94,14 @@
 
     <div class="card">
       <h1>Voorbeeld</h1>
+      <p class="hint">Spoed-preview is live geanimeerd. WEBM-export gebruikt exact hetzelfde patroon.</p>
       <div class="preview">
         <div class="slot"><div class="label">Normaal</div><canvas id="cn" width="600" height="240"></canvas></div>
-        <div class="slot"><div class="label">Spoed</div><canvas id="cu" width="600" height="240"></canvas></div>
+        <div class="slot"><div class="label">Spoed (animatie)</div><canvas id="cu" width="600" height="240"></canvas></div>
       </div>
     </div>
   </div>
 
-  <script src="app.js"></script>
+  <script defer src="app.js"></script>
 </body>
 </html>

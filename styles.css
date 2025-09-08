@@ -6,6 +6,7 @@ h1{font-size:18px;margin:0 0 10px}
 h2{font-size:16px;margin:12px 0 8px;color:#a8c3ff}
 label{display:block;font-size:12px;color:#8aa0b4;margin-bottom:6px}
 input,select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #24314f;background:#0c1324;color:#e7eef7;outline:none}
+.hint{margin:8px 0 12px;color:#9fb4c8;font-size:13px}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}

@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Healthcheck</title>
+</head>
+<body>
+  <h1>Healthcheck</h1>
+  <p id="msg">JS wordt niet uitgevoerd.</p>
+  <script>
+    document.getElementById('msg').textContent = 'JS werkt ✅ ' + new Date().toLocaleString();
+    console.log('healthcheck ok');
+  </script>
+</body>
+</html>
